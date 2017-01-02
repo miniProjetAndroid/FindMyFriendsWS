@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Lieu.findByPlaceID", query = "SELECT l FROM Lieu l WHERE l.placeID = :placeID")})
 public class Lieu implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -155,5 +157,7 @@ public class Lieu implements Serializable {
     public String toString() {
         return "entities.Lieu[ id=" + id + " ]";
     }
+
+
     
 }

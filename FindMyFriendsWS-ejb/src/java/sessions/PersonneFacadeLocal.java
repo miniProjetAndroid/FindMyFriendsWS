@@ -29,5 +29,7 @@ public interface PersonneFacadeLocal {
     List<Personne> findRange(int[] range);
 
     int count();
+     public Personne findByMailAndPass(String mail, String pass);
+     public List<Personne> search(Personne P,Integer offset, String nom, String prenom, Integer nbre, Boolean premierappel);
     
 }

@@ -7,7 +7,9 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,12 +21,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -44,8 +48,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Personne.findByLieuDeNaissance", query = "SELECT p FROM Personne p WHERE p.lieuDeNaissance = :lieuDeNaissance"),
     @NamedQuery(name = "Personne.findByDateDeNaissance", query = "SELECT p FROM Personne p WHERE p.dateDeNaissance = :dateDeNaissance"),
     @NamedQuery(name = "Personne.findByDateDEnregistrement", query = "SELECT p FROM Personne p WHERE p.dateDEnregistrement = :dateDEnregistrement"),
-    @NamedQuery(name = "Personne.findByMotDePasse", query = "SELECT p FROM Personne p WHERE p.motDePasse = :motDePasse")})
+    @NamedQuery(name = "Personne.findByMotDePasse", query = "SELECT p FROM Personne p WHERE p.motDePasse = :motDePasse"),
+    @NamedQuery(name = "Personne.findByMailAndPass", query = "SELECT p FROM Personne p WHERE p.motDePasse = :pass and p.email = :mail"),
+    @NamedQuery(name = "Personne.findPeople", query = "SELECT p FROM Personne p WHERE (not(p IN :list)) and (p.nom LIKE :Nom and p.prenom LIKE :Prenom) and (p.nom > :persnom or (p.nom = :persnom and p.prenom > :persprenom) or (p.nom = :persnom and p.prenom = :persprenom and p.id> :pesid) ) order by p.nom ASC, p.prenom ASC, p.id DESC"),
+    @NamedQuery(name = "Personne.findPeopleFirstCall", query = "SELECT p FROM Personne p WHERE (not (p IN :list)) and (p.nom LIKE :Nom and p.prenom LIKE :Prenom) order by p.nom ASC, p.prenom ASC, p.id DESC")
+
+})
 public class Personne implements Serializable {
+
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personne", fetch = FetchType.EAGER)
+    
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -89,9 +105,6 @@ public class Personne implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "mot_de_passe")
     private String motDePasse;
-    @Lob
-    @Column(name = "photo")
-    private byte[] photo;
     @JoinColumn(name = "lieu", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.EAGER)
     private Lieu lieu;
@@ -191,13 +204,6 @@ public class Personne implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
 
     public Lieu getLieu() {
         return lieu;
@@ -231,5 +237,21 @@ public class Personne implements Serializable {
     public String toString() {
         return "entities.Personne[ id=" + id + " ]";
     }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+
+
+
+
+
+
+
     
 }
