@@ -55,7 +55,7 @@ public class Login {
                 .create();
 
         P = personneFacade.findByMailAndPass(gson.fromJson(uname, String.class), gson.fromJson(pwd, String.class));
-
+        if (P != null) {
         if (P.getLieu() != null) {
             Lieu lieuToRemove = P.getLieu();
             P.setLieu(null);
@@ -70,7 +70,7 @@ public class Login {
         P.setLieu(L);
         personneFacade.edit(P);
 
-        if (P != null) {
+        
             response = gson.toJson(P);
         }
 
