@@ -7,7 +7,9 @@ package sessions;
 
 import entities.Personne;
 import java.util.List;
+
 import javax.ejb.EJB;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +39,7 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
     public PersonneFacade() {
         super(Personne.class);
     }
+
     public Personne findByMailAndPass(String mail, String pass){
         
     Personne P= null;
@@ -79,7 +82,7 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
         if(Amis!=null){
    E.removeAll(Amis);}
     return E;
-          
-    }
+    } 
+
     
 }
