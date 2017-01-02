@@ -83,10 +83,12 @@ public class Register {
     private PersonneFacadeLocal lookupPersonneFacadeLocal() {
         try {
             Context c = new InitialContext();
-            return (PersonneFacadeLocal) c.lookup("java:global/ServiceWebAndroid/ServiceWebAndroid-ejb/PersonneFacade!sessions.PersonneFacadeLocal");
+            return (PersonneFacadeLocal) c.lookup("java:global/FindMyFriendsWS/FindMyFriendsWS-ejb/PersonneFacade!sessions.PersonneFacadeLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
-    } 
+    }
+
+   
 }

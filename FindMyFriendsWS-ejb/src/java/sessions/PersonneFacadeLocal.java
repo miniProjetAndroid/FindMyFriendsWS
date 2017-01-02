@@ -30,4 +30,6 @@ public interface PersonneFacadeLocal {
 
     int count();
     
+    public Personne findByMailAndPass(String mail, String pass);
+    
 }

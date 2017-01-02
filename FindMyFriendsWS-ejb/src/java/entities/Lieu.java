@@ -58,11 +58,11 @@ public class Lieu implements Serializable {
     @Column(name = "latitude")
     private double latitude;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "placeID")
     private int placeID;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "adresse")
